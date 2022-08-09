@@ -1,0 +1,60 @@
+-- 1st Query ----------------------------------------------
+
+Select * from Employee Where Ename like 'A%'
+
+
+-- 2nd Query----------------------------------------------
+--select * from Employee a join Department d
+	--on a.DeptNo = d.DeptNo
+	--where a.DeptNo != (select * from Employee 
+
+Select * from Employee where Mgr_Id is null
+
+-- 3rd Query ---------------------------------------------
+
+select Ename,EmpNo,Salary from Employee where Salary >= 1200 and  Salary <=1400
+
+-- 4th Query ---------------------------------------------
+Select * from employee where Job = 'Manager'
+Update Employee 
+set Salary = Salary + 0.1*Salary 
+Select * from employee where Job = 'Manager'
+
+-- 5th Query -----------------------------------------------
+Select Count (*) as 'Number Of Clerks' from Employee where Job = 'Clerk'
+
+-- 6th Query -----------------------------------------------
+
+select Job,Avg(Salary) as 'Average Salary' , Count(*) as 'Count' from Employee group by Job 
+
+
+-- 7th Query ----------------------------------------------
+
+Select * from Employee where Salary in (select min(salary) from Employee union all select max(salary) from Employee)
+
+-- 8th Query ---------------------------------------------
+
+--select DeptNo , Count(*) as 'Count' from Employee 
+--group by DeptNo
+select * from Department where DeptNo not in (select DeptNo from Employee) 
+
+-- 9th Query ---------------------------------------------
+select Ename, Job,Salary from Employee  where Salary >= 1200 and DeptNo =20 and (Job = 'Analyst') order by Ename
+
+-- 10th Query --------------------------------------------
+select d.DeptName,d.DeptNo,sum(e.Salary) as 'Total Salary' from Department d left join Employee e on e.DeptNo=d.DeptNo group by d.DeptNo,d.DeptName
+
+-- 11th Query --------------------------------------------
+select Salary,Ename from Employee where Ename = 'Miller' or Ename ='Smith'
+
+-- 12th Query --------------------------------------------
+select * from Employee where Ename like 'A%' or Ename like 'S%'
+
+-- 13th Query --------------------------------------------
+select Ename, 12*Salary as 'Yearly Salary' from Employee where Ename = 'Smith'
+
+-- 14th Query --------------------------------------------	
+select Ename,Salary  from Employee where Salary not between 1500 and 2850  --not in(Select Ename,Salary from Employee where Salary <= 1500 and Salary >= 2850) 
+		
+
+
