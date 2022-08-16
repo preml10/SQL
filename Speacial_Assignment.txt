@@ -1,0 +1,52 @@
+create database IT_Firm
+
+create table Client ( Client_Id int Primary key, Cname varchar(30) not null , Adress varchar(30) , Email varchar(30) unique , Phone int , Buisness varchar(30) not null )
+
+create table Department ( Dept_No int Primary Key , D_Name varchar(15) , Loc varchar(20))
+
+create table Employee (Emp_No int primary key, E_Name varchar(30) not null , Job varchar(30) , Salary float check (Salary >0), Dept_No int foreign key references Department(Dept_No))
+
+create table Projects ( Project_Id int primary key , Descr varchar(30) not null , Start_Date date, Planned_End_Date date , Actual_End_Date date , Budget Bigint check (budget>0),Client_Id int foreign key references Client(Client_Id),Check(Actual_End_Date > Planned_End_Date) )
+
+create table Employee_Task ( Project_Id int not null , Emp_No int not null , Start_Date date, End_Date date , Task varchar(25) not null , Status varchar (15) not null, Primary key(Project_Id, Emp_No),foreign key(Project_Id) references Projects(Project_Id), Foreign Key(Emp_No) references Employee(Emp_No) )
+
+alter table client drop column Phone 
+alter table client add phone bigint
+
+insert into Client values 
+(1001,'ACME Utilities','Noida','contact@acmeutil.com','Manufacturing',9567880032),
+(1002,'Trackon Consultants', 'Mumbai', 'consult@trackon.com','Consultant',8734310090),
+(1003,'MoneySaver Destribution','Kolkata','save@moneysaver@gmail.com','Reseller',7799886655),
+(1004,'Lawful Corp','Chennai','justice@lawful.com','Professional',9210342219)
+
+/*Select * from Client */
+
+INSERT INTO Employee VALUES
+(7001 ,'Sandeep','Analyst', 25000 ,10),
+(7002,'Rajesh','Designer', 30000 ,10),
+(7003 ,'Madhav', 'Developer' ,40000 ,20),
+(7004,'Manoj', 'Developer', 40000, 20),
+(7005, 'Abhay' ,'Designer',35000,10),
+(7006, 'Uma' ,'Tester', 30000, 30)
+
+select * from Employee
+
+INSERT INTO Department VALUES
+(10 ,'Design' ,'Pune'),
+(20 ,'Development', 'Pune'),
+(30 ,'Testing', 'Mumbai'),
+(40 ,'Document', 'Mumbai')
+
+Select * from Department
+
+INSERT INTO Projects VALUES
+(401, 'Inventory', '2011-04-01', '2011-10-01', '2011-11-31',150000 ,1001),
+(402, 'Accounting', '2011-08-01','2012-01-01', Null, 500000, 1002)
+
+select * from Projects
+
+INSERT INTO  Employee_Task VALUES
+(401, 7001,'2011-04-01','2011-04-20', 'System Analysis','Completed'),
+(401 ,7002 ,'2011-04-21', '2011-05-30', 'System Design','Completed')
+
+select * from Employee_Task
